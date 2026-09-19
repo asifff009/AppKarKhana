@@ -1,0 +1,315 @@
+/* =========================================
+   APPKARKHANA NAVBAR
+   ========================================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border-bottom: 1px solid #e5e7eb;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.navbar-content {
+  width: min(1180px, 92%);
+  min-height: 76px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+
+/* =========================================
+   LOGO
+   ========================================= */
+
+.logo {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #172033;
+
+  font-size: 25px;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.85;
+}
+
+.logo-icon {
+  color: #2563eb;
+
+  font-size: 24px;
+  font-weight: 900;
+
+  letter-spacing: -2px;
+}
+
+.logo-text {
+  color: #172033;
+}
+
+.logo-text strong {
+  color: #2563eb;
+  font-weight: 850;
+}
+
+
+/* =========================================
+   NAV LINKS
+   ========================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 30px;
+
+  flex: 1;
+}
+
+.nav-link {
+  position: relative;
+
+  padding: 8px 0;
+
+  color: #475569;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 0;
+  height: 2px;
+
+  background: #2563eb;
+
+  transition: width 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #2563eb;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+
+/* =========================================
+   REGISTER BUTTON
+   ========================================= */
+
+.nav-register-btn {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 0 19px;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  border: 1px solid #2563eb;
+
+  font-size: 14px;
+  font-weight: 750;
+
+  white-space: nowrap;
+
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.16);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.nav-register-btn:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 9px 22px rgba(37, 99, 235, 0.22);
+}
+
+.nav-register-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .navbar-content {
+    gap: 18px;
+  }
+
+  .nav-links {
+    gap: 18px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .logo-icon {
+    font-size: 21px;
+  }
+
+  .nav-register-btn {
+    padding: 0 14px;
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  .navbar-content {
+    min-height: auto;
+
+    padding: 15px 0;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  .logo {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .nav-links {
+    order: 3;
+
+    width: 100%;
+
+    display: flex;
+
+    overflow-x: auto;
+
+    justify-content: flex-start;
+
+    gap: 24px;
+
+    padding: 5px 2px 2px;
+
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    flex-shrink: 0;
+
+    font-size: 13px;
+  }
+
+  .nav-register-btn {
+    position: absolute;
+
+    right: 4%;
+
+    top: 16px;
+
+    min-height: 38px;
+
+    padding: 0 12px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .navbar-content {
+    width: 94%;
+  }
+
+  .logo {
+    justify-content: flex-start;
+
+    padding-left: 4px;
+
+    font-size: 21px;
+  }
+
+  .logo-icon {
+    font-size: 20px;
+  }
+
+  .nav-register-btn {
+    right: 3%;
+
+    min-height: 36px;
+
+    padding: 0 10px;
+
+    font-size: 11px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+}

@@ -1,0 +1,708 @@
+/* =====================================================
+   APPKARKHANA
+   STUDENT STATUS PAGE
+   ===================================================== */
+
+.student-status-page {
+  min-height: 100vh;
+
+  padding: 55px 20px 70px;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(124, 58, 237, 0.08),
+      transparent 32%
+    ),
+    #f8f8fb;
+
+  color: #111827;
+}
+
+
+.student-status-container {
+  width: 100%;
+  max-width: 720px;
+
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   BRAND
+   ===================================================== */
+
+.status-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-bottom: 55px;
+
+  color: #111827;
+
+  text-decoration: none;
+
+  font-size: 24px;
+  font-weight: 900;
+
+  letter-spacing: -0.8px;
+}
+
+.status-brand span {
+  color: #7c3aed;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.status-header {
+  text-align: center;
+
+  margin-bottom: 25px;
+}
+
+.status-eyebrow {
+  margin: 0 0 8px;
+
+  color: #7c3aed;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.status-header h1 {
+  margin: 0 0 9px;
+
+  color: #111827;
+
+  font-size: 36px;
+  font-weight: 900;
+
+  line-height: 1.1;
+
+  letter-spacing: -1.5px;
+}
+
+.status-header > p:last-child {
+  max-width: 480px;
+
+  margin: 0 auto;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+
+/* =====================================================
+   SECURITY NOTICE
+   ===================================================== */
+
+.status-security-notice {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  margin-bottom: 15px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #ddd6fe;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #faf9ff,
+      #ffffff
+    );
+}
+
+.security-icon {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #f3f0ff;
+
+  font-size: 13px;
+}
+
+.status-security-notice strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #4c1d95;
+
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.status-security-notice p {
+  margin: 0;
+
+  color: #8b7fa8;
+
+  font-size: 8px;
+
+  line-height: 1.55;
+}
+
+
+/* =====================================================
+   SEARCH CARD
+   ===================================================== */
+
+.status-search-card {
+  padding: 19px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 30px rgba(15, 23, 42, 0.04);
+}
+
+.status-search-card form > label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.status-search-row {
+  display: flex;
+
+  gap: 8px;
+}
+
+.status-search-row input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 45px;
+
+  padding: 0 12px;
+
+  border: 1px solid #e1e3e8;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.status-search-row input::placeholder {
+  color: #b0b3ba;
+}
+
+.status-search-row input:focus {
+  border-color: #8b5cf6;
+
+  box-shadow:
+    0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+
+.status-search-row button {
+  height: 45px;
+
+  padding: 0 17px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.status-search-row button:hover:not(:disabled) {
+  background: #7c3aed;
+
+  transform: translateY(-1px);
+}
+
+.status-search-row button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   SEARCH HINT
+   ===================================================== */
+
+.status-search-hint {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  margin: 9px 0 0;
+
+  color: #a1a1aa;
+
+  font-size: 8px;
+
+  line-height: 1.5;
+}
+
+.status-search-hint span {
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+.status-error {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-top: 13px;
+
+  padding: 13px 14px;
+
+  border: 1px solid #fecaca;
+
+  border-radius: 10px;
+
+  background: #fef2f2;
+}
+
+.status-error > span {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #fee2e2;
+
+  color: #b91c1c;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.status-error strong {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #991b1b;
+
+  font-size: 9px;
+}
+
+.status-error p {
+  margin: 0;
+
+  color: #b91c1c;
+
+  font-size: 8px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   RESULT CARD
+   ===================================================== */
+
+.student-result-card {
+  margin-top: 17px;
+
+  padding: 22px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 12px 35px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =====================================================
+   RESULT TOP
+   ===================================================== */
+
+.result-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.result-label {
+  margin: 0 0 3px;
+
+  color: #9ca3af;
+
+  font-size: 7px;
+  font-weight: 900;
+
+  letter-spacing: 1.4px;
+}
+
+.result-top h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 28px;
+  font-weight: 900;
+
+  letter-spacing: -1px;
+}
+
+
+/* =====================================================
+   PAYMENT STATUS
+   ===================================================== */
+
+.payment-status {
+  padding: 7px 10px;
+
+  border-radius: 20px;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.status-verified {
+  background: #ecfdf5;
+
+  color: #047857;
+}
+
+.status-pending {
+  background: #fffbeb;
+
+  color: #b45309;
+}
+
+.status-rejected {
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+
+/* =====================================================
+   DIVIDER
+   ===================================================== */
+
+.result-divider {
+  height: 1px;
+
+  margin: 17px 0;
+
+  background: #f0f0f2;
+}
+
+
+/* =====================================================
+   INFO GRID
+   ===================================================== */
+
+.student-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.student-info-item {
+  min-width: 0;
+}
+
+.student-info-item span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #a1a1aa;
+
+  font-size: 8px;
+}
+
+.student-info-item strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #374151;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  line-height: 1.4;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   STATUS MESSAGE
+   ===================================================== */
+
+.status-message-box {
+  margin-top: 19px;
+
+  padding: 14px;
+
+  border-radius: 10px;
+}
+
+.status-message-box strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.status-message-box p {
+  margin: 0;
+
+  font-size: 8px;
+
+  line-height: 1.6;
+}
+
+.status-message-box.status-verified {
+  border: 1px solid #bbf7d0;
+
+  background: #f0fdf4;
+
+  color: #166534;
+}
+
+.status-message-box.status-pending {
+  border: 1px solid #fde68a;
+
+  background: #fffbeb;
+
+  color: #92400e;
+}
+
+.status-message-box.status-rejected {
+  border: 1px solid #fecaca;
+
+  background: #fef2f2;
+
+  color: #991b1b;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.status-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 17px;
+
+  margin-top: 25px;
+}
+
+.status-footer-links a {
+  color: #9ca3af;
+
+  text-decoration: none;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  transition: color 0.2s ease;
+}
+
+.status-footer-links a:hover {
+  color: #7c3aed;
+}
+
+.status-footer-links span {
+  color: #d4d4d8;
+
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 650px) {
+
+  .student-status-page {
+    padding: 35px 16px 50px;
+  }
+
+  .status-brand {
+    margin-bottom: 40px;
+  }
+
+  .status-header h1 {
+    font-size: 31px;
+  }
+
+  .student-info-grid {
+    gap: 12px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 500px) {
+
+  .student-status-page {
+    padding: 27px 13px 40px;
+  }
+
+  .status-brand {
+    margin-bottom: 35px;
+
+    font-size: 21px;
+  }
+
+  .status-header {
+    margin-bottom: 19px;
+  }
+
+  .status-header h1 {
+    font-size: 27px;
+
+    letter-spacing: -1px;
+  }
+
+  .status-header > p:last-child {
+    font-size: 10px;
+  }
+
+  .status-security-notice {
+    padding: 12px;
+  }
+
+  .status-search-card {
+    padding: 15px;
+  }
+
+  .status-search-row {
+    flex-direction: column;
+  }
+
+  .status-search-row input {
+    width: 100%;
+  }
+
+  .status-search-row button {
+    width: 100%;
+  }
+
+  .student-result-card {
+    padding: 17px;
+  }
+
+  .result-top {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .payment-status {
+    align-self: flex-start;
+  }
+
+  .student-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-info-item strong {
+    white-space: normal;
+  }
+
+  .status-footer-links {
+    gap: 11px;
+  }
+
+}
