@@ -1,0 +1,363 @@
+<?php
+
+require_once "config.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    jsonResponse(true, "Preflight request accepted.");
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsonResponse(false, "Only POST request is allowed.");
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| GET FORM DATA
+|--------------------------------------------------------------------------
+*/
+
+$full_name = trim($_POST['full_name'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$phone = trim($_POST['phone'] ?? '');
+$university = trim($_POST['university'] ?? '');
+$current_level = trim($_POST['current_level'] ?? '');
+$message = trim($_POST['message'] ?? '');
+
+$payment_method = strtolower(
+    trim($_POST['payment_method'] ?? '')
+);
+
+$payment_number = trim(
+    $_POST['payment_number'] ?? ''
+);
+
+$transaction_id = trim(
+    $_POST['transaction_id'] ?? ''
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| VALIDATION
+|--------------------------------------------------------------------------
+*/
+
+if ($full_name === '') {
+    jsonResponse(false, "Full name is required.");
+}
+
+if ($email === '') {
+    jsonResponse(false, "Email is required.");
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    jsonResponse(false, "Please enter a valid email address.");
+}
+
+if ($phone === '') {
+    jsonResponse(false, "Phone number is required.");
+}
+
+if ($university === '') {
+    jsonResponse(false, "University / Institution is required.");
+}
+
+if ($current_level === '') {
+    jsonResponse(false, "Current level is required.");
+}
+
+if (!in_array(
+    $payment_method,
+    ['bkash', 'nagad', 'rocket'],
+    true
+)) {
+    jsonResponse(false, "Invalid payment method.");
+}
+
+if ($payment_number === '') {
+    jsonResponse(false, "Payment number is required.");
+}
+
+if ($transaction_id === '') {
+    jsonResponse(false, "Transaction ID is required.");
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PAYMENT SCREENSHOT
+|--------------------------------------------------------------------------
+*/
+
+if (
+    !isset($_FILES['payment_screenshot']) ||
+    $_FILES['payment_screenshot']['error'] !== UPLOAD_ERR_OK
+) {
+    jsonResponse(
+        false,
+        "Payment screenshot is required."
+    );
+}
+
+$file = $_FILES['payment_screenshot'];
+
+$max_file_size = 5 * 1024 * 1024;
+
+if ($file['size'] > $max_file_size) {
+    jsonResponse(
+        false,
+        "Payment screenshot must be smaller than 5MB."
+    );
+}
+
+$finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+if (!$finfo) {
+    jsonResponse(
+        false,
+        "Unable to validate uploaded file."
+    );
+}
+
+$file_mime = finfo_file(
+    $finfo,
+    $file['tmp_name']
+);
+
+finfo_close($finfo);
+
+$allowed_mimes = [
+    'image/jpeg',
+    'image/png',
+    'image/webp'
+];
+
+if (!in_array($file_mime, $allowed_mimes, true)) {
+    jsonResponse(
+        false,
+        "Only JPG, PNG and WEBP images are allowed."
+    );
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| UPLOAD DIRECTORY
+|--------------------------------------------------------------------------
+*/
+
+$upload_directory =
+    __DIR__ .
+    DIRECTORY_SEPARATOR .
+    "uploads" .
+    DIRECTORY_SEPARATOR .
+    "payment_screenshots";
+
+
+if (!is_dir($upload_directory)) {
+
+    if (!mkdir(
+        $upload_directory,
+        0755,
+        true
+    )) {
+        jsonResponse(
+            false,
+            "Unable to create upload directory."
+        );
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FILE EXTENSION
+|--------------------------------------------------------------------------
+*/
+
+$extension_map = [
+    'image/jpeg' => 'jpg',
+    'image/png' => 'png',
+    'image/webp' => 'webp'
+];
+
+$file_extension =
+    $extension_map[$file_mime] ?? 'jpg';
+
+
+/*
+|--------------------------------------------------------------------------
+| UNIQUE FILE NAME
+|--------------------------------------------------------------------------
+*/
+
+$file_name =
+    'payment_' .
+    bin2hex(random_bytes(12)) .
+    '.' .
+    $file_extension;
+
+
+$file_path =
+    $upload_directory .
+    DIRECTORY_SEPARATOR .
+    $file_name;
+
+
+if (!move_uploaded_file(
+    $file['tmp_name'],
+    $file_path
+)) {
+    jsonResponse(
+        false,
+        "Failed to upload payment screenshot."
+    );
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PAYMENT AMOUNT
+|--------------------------------------------------------------------------
+*/
+
+$payment_amount = 3499;
+
+$payment_status = 'pending';
+
+
+/*
+|--------------------------------------------------------------------------
+| PRIVATE ACCESS TOKEN
+|--------------------------------------------------------------------------
+|
+| This token is generated by the server.
+| It is NOT based on the student ID.
+| Therefore knowing another student's ID
+| is not enough to access their information.
+|
+*/
+
+$access_token = bin2hex(
+    random_bytes(32)
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| PAYMENT SCREENSHOT PATH
+|--------------------------------------------------------------------------
+*/
+
+$payment_screenshot =
+    'uploads/payment_screenshots/' .
+    $file_name;
+
+
+/*
+|--------------------------------------------------------------------------
+| INSERT STUDENT
+|--------------------------------------------------------------------------
+*/
+
+$stmt = $conn->prepare(
+    "INSERT INTO students (
+        full_name,
+        email,
+        phone,
+        university,
+        current_level,
+        message,
+        payment_method,
+        payment_number,
+        transaction_id,
+        payment_amount,
+        payment_screenshot,
+        payment_status,
+        access_token,
+        created_at,
+        updated_at
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())"
+);
+
+
+if (!$stmt) {
+    jsonResponse(
+        false,
+        "Unable to prepare registration query."
+    );
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BIND PARAMETERS
+|--------------------------------------------------------------------------
+*/
+
+$stmt->bind_param(
+    "sssssssssdsss",
+    $full_name,
+    $email,
+    $phone,
+    $university,
+    $current_level,
+    $message,
+    $payment_method,
+    $payment_number,
+    $transaction_id,
+    $payment_amount,
+    $payment_screenshot,
+    $payment_status,
+    $access_token
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| EXECUTE
+|--------------------------------------------------------------------------
+*/
+
+if (!$stmt->execute()) {
+
+    /*
+    | Remove uploaded file if database insert fails.
+    */
+    if (file_exists($file_path)) {
+        unlink($file_path);
+    }
+
+    jsonResponse(
+        false,
+        "Registration failed. Please try again."
+    );
+}
+
+
+$student_id = $stmt->insert_id;
+
+
+/*
+|--------------------------------------------------------------------------
+| SUCCESS RESPONSE
+|--------------------------------------------------------------------------
+|
+| Access token is returned ONLY at registration time.
+| It can then be saved in the user's browser.
+|
+*/
+
+jsonResponse(
+    true,
+    "Registration successful.",
+    [
+        "student_id" => $student_id,
+        "access_token" => $access_token,
+        "payment_status" => $payment_status
+    ]
+);
+
+?>
