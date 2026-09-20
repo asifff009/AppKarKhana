@@ -2,32 +2,32 @@ FROM php:8.3-apache
 
 WORKDIR /var/www/html
 
-# Install MySQLi extension
+# Install MySQLi
 RUN docker-php-ext-install mysqli
 
-# Remove every enabled Apache MPM configuration
+# Remove all enabled MPM modules
 RUN rm -f /etc/apache2/mods-enabled/mpm_*.load \
-    && rm -f /etc/apache2/mods-enabled/mpm_*.conf
+    /etc/apache2/mods-enabled/mpm_*.conf
 
-# Enable only prefork MPM for PHP
+# Enable only prefork MPM
 RUN a2enmod mpm_prefork
 
-# Enable Apache rewrite module
+# Enable rewrite
 RUN a2enmod rewrite
 
-# Copy all PHP API files
+# Copy API files
 COPY . /var/www/html/
 
-# Create upload directories
+# Upload directories
 RUN mkdir -p /var/www/html/uploads/payment_screenshots \
     && chown -R www-data:www-data /var/www/html/uploads \
     && chmod -R 775 /var/www/html/uploads
 
-# Apache listens on port 80
+# Apache port
 RUN sed -i 's/^Listen .*/Listen 80/' /etc/apache2/ports.conf \
     && sed -i 's/<VirtualHost \*:[0-9]*>/<VirtualHost *:80>/' /etc/apache2/sites-available/000-default.conf
 
-# Verify Apache configuration during image build
+# Check Apache configuration during build
 RUN apache2ctl -t
 
 EXPOSE 80
